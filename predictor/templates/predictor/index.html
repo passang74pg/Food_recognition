@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Recognition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #4f46e5;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        form {
+            margin-bottom: 1.5rem;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 0 auto 1rem auto;
+            padding: 0.5rem;
+            border: 1px solid #c7d2fe;
+            border-radius: 6px;
+            background: #f1f5f9;
+            font-size: 1rem;
+        }
+        button {
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #4338ca;
+        }
+        .result-section {
+            margin-top: 1.5rem;
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.06);
+        }
+        .result-section h2 {
+            color: #16a34a;
+            margin-bottom: 0.7rem;
+        }
+        .result-section p {
+            margin: 0.3rem 0;
+            font-size: 1.08rem;
+        }
+        .result-section strong {
+            color: #4f46e5;
+        }
+        .uploaded-img {
+            margin-top: 1rem;
+            max-width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 1.2rem 0.5rem;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Food Recognition</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="food_image" accept="image/*" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if uploaded_file_url %}
+        <div class="result-section">
+            <h2>Result</h2>
+            <p><strong>Predicted Class:</strong> {{ predicted_class }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}</p>
+            <img src="{{ uploaded_file_url }}" alt="Uploaded Image" class="uploaded-img">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
